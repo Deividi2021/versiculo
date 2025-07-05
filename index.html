@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+      <meta charset="UTF-8">
+      <title>Versículo Diário.</title>
+      <style>
+            * {
+                  margin: 0;
+            }
+
+            .citacao {
+
+
+                  padding: 20px;
+                  font-size: 24px;
+                  font-style: italic;
+                  text-align: center;
+                  border-radius: 9px;
+                  color: white;
+                  background: linear-gradient(270deg, rgb(9, 9, 231), green);
+                  background-size: 400% 400%;
+                  animation: degradeSuave 10s ease infinite;
+            }
+
+            @keyframes degradeSuave {
+                  0% {
+                        background-position: 0% 50%;
+                  }
+
+                  50% {
+                        background-position: 100% 50%;
+                  }
+
+                  100% {
+                        background-position: 0% 50%;
+                  }
+            }
+      </style>
+</head>
+
+<body>
+      <blockquote class="citacao">Carregando citação...</blockquote>
+
+      <script>
+            fetch('citacoes.txt')
+                  .then(response => response.text())
+                  .then(data => {
+                        const citacoes = data.trim().split('\n');
+                        const hoje = new Date();
+                        const index = hoje.getFullYear() * 100 + hoje.getMonth() * 31 + hoje.getDate();
+                        const citacaoDoDia = citacoes[index % citacoes.length];
+                        document.querySelector('.citacao').textContent = citacaoDoDia;
+                  })
+                  .catch(err => {
+                        document.querySelector('.citacao').textContent = "Não foi possível carregar as citações.";
+                        console.error(err);
+                  });
+      </script>
+</body>
+
+</html>>
